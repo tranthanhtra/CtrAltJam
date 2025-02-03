@@ -23,6 +23,7 @@ public class Keyboard : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
         foreach (var key in keyList)
         {
             if (Input.GetKey(key.Key))

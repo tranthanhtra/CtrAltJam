@@ -31,6 +31,7 @@ public class MovingCapsule : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
         Vector2 playerInput;
         // playerInput.x = Input.GetAxis("Horizontal");
         // playerInput.y = Input.GetAxis("Vertical");
