@@ -92,6 +92,7 @@ public class Keyboard : MonoBehaviour
         cube.transform.localScale = new Vector3(length, 1, 1);
         cube.name = "Top";
         cube.tag = Utils.wallTag;
+        cube.layer = LayerMask.NameToLayer(Utils.wallTag);
         // bottom
         cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.localPosition = new Vector3(transform.localPosition.x + length / 2 - spaceKey, .5f,
@@ -99,6 +100,7 @@ public class Keyboard : MonoBehaviour
         cube.transform.localScale = new Vector3(length, 1, 1);
         cube.name = "Bottom";
         cube.tag = Utils.wallTag;
+        cube.layer = LayerMask.NameToLayer(Utils.wallTag);
         // left
         cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.localPosition = new Vector3(transform.localPosition.x - spaceKey, .5f,
@@ -106,6 +108,7 @@ public class Keyboard : MonoBehaviour
         cube.transform.localScale = new Vector3(1, 1, width + spaceKey);
         cube.name = "Left";
         cube.tag = Utils.wallTag;
+        cube.layer = LayerMask.NameToLayer(Utils.wallTag);
         // right
         cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.localPosition = new Vector3(transform.localPosition.x + length - spaceKey, .5f,
@@ -113,5 +116,6 @@ public class Keyboard : MonoBehaviour
         cube.transform.localScale = new Vector3(1, 1, width + spaceKey);
         cube.name = "Right";
         cube.tag = Utils.wallTag;
+        cube.layer = LayerMask.NameToLayer(Utils.wallTag);
     }
 }

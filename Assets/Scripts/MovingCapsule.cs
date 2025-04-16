@@ -46,7 +46,6 @@ public class MovingCapsule : MonoBehaviour
             lastChangeDirectionTime = 0;
             changeDirectionTime = Random.Range(changeDirectionAfter.x, changeDirectionAfter.y);
             randomInput = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
-            Debug.Log(randomInput);
         }
 
         playerInput = randomInput;
@@ -67,6 +66,7 @@ public class MovingCapsule : MonoBehaviour
 
         //with physic
         rigidbody.velocity = velocity;
+        Debug.Log(velocity);
 
         if (playerInput != Vector2.zero)
         {
