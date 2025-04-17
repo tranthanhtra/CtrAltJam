@@ -66,7 +66,7 @@ public class MovingCapsule : MonoBehaviour
 
         //with physic
         rigidbody.velocity = velocity;
-        Debug.Log(velocity);
+        Debug.Log(rigidbody.velocity);
 
         if (playerInput != Vector2.zero)
         {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,7 +39,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private GameObject readyPanel;
+    [SerializeField] private GameObject bug;
+    [SerializeField] private UI uiPanel;
     private GameState currentState = GameState.Ready;
 
     public GameState CurrentState
@@ -46,37 +48,36 @@ public class GameManager : MonoBehaviour
         get => currentState;
         private set
         {
-            if (currentState == GameState.Playing && value == GameState.Ready)
-            {
-                readyPanel.SetActive(true);
-            }
-
-            if (currentState == GameState.Ready && value == GameState.Playing)
-            {
-                readyPanel.SetActive(false);
-            }
+            uiPanel.Setup(value);
             currentState = value;
         }
     }
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && currentState == GameState.Ready)
-        {
-            CurrentState = GameState.Playing;
-        }
+        CurrentState = GameState.Ready;
     }
 
-    private void KillAnt()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) )
+        {
+            if (currentState == GameState.Ready) CurrentState = GameState.Playing;
+            else if (currentState is GameState.ResultVictory or GameState.ResultDefeat) CurrentState = GameState.Ready;
+        }
+
+        if (bug.transform.position.y < -20 && currentState == GameState.Playing)
+        {
+            CurrentState = GameState.ResultVictory;
+        }
     }
 
     public enum GameState
     {
         Ready,
         Playing,
-        Result,
+        ResultVictory,
+        ResultDefeat
     }
 
 }
