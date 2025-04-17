@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [SerializeField] private Timer timer;
-    [SerializeField] private GameObject bug;
+    [SerializeField] private MovingCapsule bug;
     [SerializeField] private UI uiPanel;
     private GameState currentState = GameState.Ready;
 
@@ -60,6 +60,11 @@ public class GameManager : MonoBehaviour
                 timer.StartTimer();
             }
             else timer.gameObject.SetActive(false);
+
+            if (value == GameState.ResultVictory)
+            {
+                bug.ResetPosition();
+            }
 
             currentState = value;
         }

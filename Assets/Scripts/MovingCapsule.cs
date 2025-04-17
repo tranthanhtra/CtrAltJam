@@ -17,6 +17,7 @@ public class MovingCapsule : MonoBehaviour
     private float lastChangeDirectionTime;
     private Vector2 randomInput;
     private bool touchingWall;
+    private Vector3 initPosition;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class MovingCapsule : MonoBehaviour
 
     void Start()
     {
-        // changeDirectionTime = Random.Range(changeDirectionAfter.x, changeDirectionAfter.y);
+        initPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -74,6 +75,12 @@ public class MovingCapsule : MonoBehaviour
         }
 
         touchingWall = false;
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = initPosition;
+        Debug.Log(transform.position);
     }
 
     private void OnCollisionStay(Collision collision)
