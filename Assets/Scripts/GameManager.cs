@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     #region Singleton
+
     private static GameManager _instance;
 
     public static GameManager Instance
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
                     _instance = go.AddComponent<GameManager>();
                 }
             }
+
             return _instance;
         }
     }
@@ -37,8 +39,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     #endregion
 
+    [SerializeField] private Timer timer;
     [SerializeField] private GameObject bug;
     [SerializeField] private UI uiPanel;
     private GameState currentState = GameState.Ready;
@@ -49,6 +53,14 @@ public class GameManager : MonoBehaviour
         private set
         {
             uiPanel.Setup(value);
+            if (value == GameState.Playing)
+            {
+                timer.SetTimer(60);
+                timer.gameObject.SetActive(true);
+                timer.StartTimer();
+            }
+            else timer.gameObject.SetActive(false);
+
             currentState = value;
         }
     }
@@ -60,16 +72,22 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) )
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (currentState == GameState.Ready) CurrentState = GameState.Playing;
-            else if (currentState is GameState.ResultVictory or GameState.ResultDefeat) CurrentState = GameState.Ready;
+        }
+
+        if (Input.anyKeyDown && currentState is GameState.ResultVictory or GameState.ResultDefeat)
+        {
+            CurrentState = GameState.Ready;
         }
 
         if (bug.transform.position.y < -20 && currentState == GameState.Playing)
         {
             CurrentState = GameState.ResultVictory;
         }
+
+        if (!timer.IsRunning && currentState == GameState.Playing) CurrentState = GameState.ResultDefeat;
     }
 
     public enum GameState
@@ -79,5 +97,4 @@ public class GameManager : MonoBehaviour
         ResultVictory,
         ResultDefeat
     }
-
 }

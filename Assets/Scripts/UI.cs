@@ -22,11 +22,11 @@ public class UI : MonoBehaviour
         switch (gameState)
         {
             case GameManager.GameState.ResultVictory:
-                text.text = "You Win!! Press any key to check if there is any more bugs";
+                text.text = "You Win!! Press Space to check if there is any more bugs";
                 stateImage.sprite = victorySprite;
                 break;
             case GameManager.GameState.ResultDefeat:
-                text.text = "You Lose!! The bug got away... Press any key to check where the bug is";
+                text.text = "You Lose!! The bug got away... Press Space to check where the bug is";
                 stateImage.sprite = defeatSprite;
                 break;
             case GameManager.GameState.Ready:

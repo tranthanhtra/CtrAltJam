@@ -25,7 +25,7 @@ public class MovingCapsule : MonoBehaviour
 
     void Start()
     {
-        changeDirectionTime = Random.Range(changeDirectionAfter.x, changeDirectionAfter.y);
+        // changeDirectionTime = Random.Range(changeDirectionAfter.x, changeDirectionAfter.y);
     }
 
     // Update is called once per frame
