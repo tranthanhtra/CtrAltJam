@@ -40,11 +40,13 @@ public class Keyboard : MonoBehaviour
     {
         try
         {
-            using StreamReader sr = new StreamReader("Assets/KeyboardPosition.txt");
-            string line;
+            var texts = Resources.Load<TextAsset>("KeyboardPosition");
+            // using StreamReader sr = new StreamReader(Application.dataPath + "/Resources/KeyboardPosition.txt");
+            // string line;
             Vector3 startLine = Vector3.zero;
             height = 1;
-            while ((line = sr.ReadLine()) != null)
+            var lines = texts.text.Split('\n');
+            foreach (var line in lines)
             {
                 string[] keys = line.Split(' ');
                 for (var index = 0; index < keys.Length; index++)
