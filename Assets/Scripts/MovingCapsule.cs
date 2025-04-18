@@ -18,7 +18,8 @@ public class MovingCapsule : MonoBehaviour
     private Vector2 randomInput;
     private bool touchingWall;
     private Vector3 initPosition;
-
+    private string directionCollide;
+    private float freeDirection;
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -42,13 +43,49 @@ public class MovingCapsule : MonoBehaviour
 
         lastChangeDirectionTime += Time.deltaTime;
 
+        Vector2 XRange;
+        Vector2 ZRange;
+
+        switch (directionCollide)
+        {
+            case "Right":
+                XRange = new Vector2(-1, 0);
+                ZRange = new Vector2(-1, 1);
+                freeDirection = Random.Range(1, 3);
+                break;
+            case "Left":
+                XRange = new Vector2(0, 1);
+                ZRange = new Vector2(-1, 1);
+                freeDirection = Random.Range(1, 3);
+                break;
+            case "Top":
+                XRange = new Vector2(-1, 1);
+                ZRange = new Vector2(-1, 0);
+                freeDirection = Random.Range(1, 3);
+                break;
+            case "Bottom":
+                XRange = new Vector2(-1, 1);
+                ZRange = new Vector2(0, 1);
+                freeDirection = Random.Range(1, 3);
+                break;
+            default:
+                XRange = new Vector2(-1, 1);
+                ZRange = new Vector2(-1, 1);
+                break;
+        }
+
         if (lastChangeDirectionTime > changeDirectionTime || touchingWall)
         {
             lastChangeDirectionTime = 0;
             changeDirectionTime = Random.Range(changeDirectionAfter.x, changeDirectionAfter.y);
-            randomInput = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
+            randomInput = new Vector2(UnityEngine.Random.Range(XRange.x, XRange.y), UnityEngine.Random.Range(ZRange.x, ZRange.y));
         }
 
+        if (freeDirection > 0) freeDirection -= Time.deltaTime;
+        if (freeDirection <= 0)
+        {
+            directionCollide = "";
+        }
         playerInput = randomInput;
 
         Vector3 desiredVelocity = new Vector3(playerInput.x, 0, playerInput.y) * maxSpeed;
@@ -89,6 +126,7 @@ public class MovingCapsule : MonoBehaviour
         {
             // Debug.Log("wall");
             touchingWall = true;
+            directionCollide = collision.gameObject.name;
         }
     }
     //
